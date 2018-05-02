@@ -1,0 +1,34 @@
+﻿version: '2'
+services:
+
+  postgres:
+    image: postgres:alpine
+    container_name: mwtest-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=mwtest
+      - POSTGRES_PASSWORD=mwtest
+      - POSTGRES_DB=mwtest
+    volumes:
+      - ./docker/pgadmin/shared:/shared
+    ports:
+      - 5432:5432
+    networks:
+      - default
+
+  pgadmin:
+    build: ./docker/pgadmin/
+    container_name: mwtest-pgadmin4
+    restart: unless-stopped
+    volumes:
+      - ./docker/pgadmin/shared/:/shared
+    depends_on:
+      - postgres
+    ports:
+      - 5050:5050
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
