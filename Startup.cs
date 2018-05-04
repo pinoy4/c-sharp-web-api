@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MWTest.Db;
+using MWTest.Extensions;
 using MWTest.Middleware;
-using MWTest.Model;
-using Npgsql.PostgresTypes;
 
 namespace MWTest
 {
@@ -31,8 +22,16 @@ namespace MWTest
         {
             // Add database service
             var connectionString = Configuration.GetConnectionString("MWTestDb");
-            services.AddEntityFrameworkNpgsql().AddDbContext<MWTestDb>(options => options.UseNpgsql(connectionString));
+            services.AddMWTestDbService(connectionString);
 
+            // Add JWT Authentication
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            services.AddMWTestJwtServices(jwtAppSettingOptions);
+
+            // Add other application dependencies
+            services.AddMWTestServices();
+
+            // Add MVC
             services.AddMvc();
         }
 
