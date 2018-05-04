@@ -58,7 +58,7 @@ namespace MWTest.Controllers
             Request.HttpContext.Response.Headers.Add("jwt", jwt);
 
             // Return correct result
-            return Ok(); // new OkObjectResult(jwt);
+            return NoContent(); // new OkObjectResult(jwt);
         }
     }
 }

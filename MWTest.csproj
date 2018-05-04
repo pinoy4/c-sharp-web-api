@@ -15,6 +15,7 @@
         <Folder Include="Payloads\" />
         <Folder Include="Extensions\" />
         <Folder Include="Migrations\" />
+        <Folder Include="ConfigurationOptions\" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />

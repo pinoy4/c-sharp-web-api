@@ -20,9 +20,9 @@ To run migrations execute `dotnet ef database update` in the terminal from the r
 
 - [x] database connection
 - [x] database migrations
-- [ ] automatic swagger documentation
-- [ ] authentication
+- [x] authentication
 - [ ] authorization
+- [ ] automatic swagger documentation
 - [ ] testing
 - [ ] input validation and payloads
 
@@ -37,12 +37,14 @@ For a deeper understanding of ASP.Net Core's dependency injection [this explanat
 Following Microsoft's pattern of extending the `IServiceCollection` with methods to register services the `RegisterServices` static class was created. In it we add all necessary dependencies and then we call it's `AddMWTestServices` method in the `ConfigureServices` method of `Startup`.
 
 #### Configuration
-To add the configuration to any service (or to `Startup`) just add it as a dependency in the constructor and the dependency injection engine will handle the rest.
+To add the configuration to any service (or to `Startup`) just add it as a dependency in the constructor and the dependency injection engine will handle the rest. It is a good idea where appropriate to use the [Options pattern](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-2.1) in configuration.
+This enables the configuration to be mapped as objects and be injected in services that require it.
 
 #### Postgresql connection
 - Add dependencies `Npgsql.EntityFrameworkCore.PostgreSQL` and `Npgsql.EntityFrameworkCore.PostgreSQL.Design`
 - Create the database `DbContext` class (`MWTestDb.cs`) with only the constructor
-- Add the `ConnectionStrings` key in the `appsettings.json` file
+- Add the `DBConnectionOptions` key in the `appsettings.json` file
+- Add the `AddMWTestDbService` method in the `RegisterServices` extension class
 - In the `ConfigureServices` method of `Startup` add the database service
 - [npgsql documetation](http://www.npgsql.org/efcore/index.html)
 
@@ -68,4 +70,6 @@ This part is heavily *inspired* (pronounced copy-pasted) from [this tutorial](ht
 - Add class `JwtIssuerOptions`
 - Add interface `IJwtFactory` and implementing class `JwtFctory`
 - Add class `JwtController`
+- Add the `app.UseAuthentication();` line in the `Configure` method of `Startup`
+- Add the `[Authorize]` attribute on the controller or action that needs authorization
 

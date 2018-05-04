@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MWTest.ConfigurationOptions;
 using MWTest.Extensions;
 using MWTest.Middleware;
 
@@ -21,8 +22,8 @@ namespace MWTest
         public void ConfigureServices(IServiceCollection services)
         {
             // Add database service
-            var connectionString = Configuration.GetConnectionString("MWTestDb");
-            services.AddMWTestDbService(connectionString);
+            var dbConnectionOptions = Configuration.GetSection("DBConnectionOptions");
+            services.AddMWTestDbService(dbConnectionOptions);
 
             // Add JWT Authentication
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
@@ -42,6 +43,8 @@ namespace MWTest
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseAuthentication();
 
             app.UseMiddleware<DateTimeHeaderMiddleware>();
 

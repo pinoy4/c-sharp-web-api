@@ -1,37 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MWTest.Db;
+using MWTest.Managers;
 using MWTest.Model;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MWTest.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public class UsersController : Controller
     {
-        private readonly MWTestDb _db;
+        private readonly IUserManager _userManager;
 
-        public UsersController(MWTestDb db)
+        public UsersController(IUserManager userManager)
         {
-            _db = db;
+            _userManager = userManager;
         }
 
         // GET api/users
         [HttpGet]
-        [Authorize]
         public IEnumerable<User> Get()
         {
-            return _db.Users.ToArray();
+            return _userManager.AllUsers();
         }
 
         // GET api/users/:id
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<User> Get(int id)
         {
-            return "user1";
+            return await _userManager.UserWithIdAsync(id);
         }
 
         // POST api/users

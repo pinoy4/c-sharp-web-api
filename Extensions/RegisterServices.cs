@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MWTest.Auth;
+using MWTest.ConfigurationOptions;
 using MWTest.Db;
 using MWTest.Managers;
 using System;
@@ -13,9 +14,11 @@ namespace MWTest.Extensions
 {
     public static class RegisterServices
     {
-        public static void AddMWTestDbService(this IServiceCollection services, string connectionString)
+        public static void AddMWTestDbService(this IServiceCollection services, IConfigurationSection dbConnectionOptions)
         {
-            services.AddEntityFrameworkNpgsql().AddDbContext<MWTestDb>(options => options.UseNpgsql(connectionString));
+            services.AddEntityFrameworkNpgsql().AddDbContext<MWTestDb>(
+                options => options.UseNpgsql(dbConnectionOptions["ConnectionString"])
+            );
         }
 
         public static void AddMWTestJwtServices(this IServiceCollection services, IConfigurationSection jwtAppSettingOptions)
@@ -59,6 +62,8 @@ namespace MWTest.Extensions
                 configureOptions.TokenValidationParameters = tokenValidationParameters;
                 configureOptions.SaveToken = true;
             });
+
+            //services.AddAuthorization();
         }
 
         public static void AddMWTestServices(this IServiceCollection services)

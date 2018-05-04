@@ -1,7 +1,9 @@
 ﻿using MWTest.Db;
 using MWTest.Model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MWTest.Managers
 {
@@ -12,6 +14,16 @@ namespace MWTest.Managers
         public UserManager(MWTestDb db)
         {
             _db = db;
+        }
+
+        public async Task<User> UserWithIdAsync(int id)
+        {
+            return await _db.Users.FindAsync(id);
+        }
+
+        public IEnumerable<User> AllUsers()
+        {
+            return _db.Users.ToArray();
         }
 
         public User UserWithUsername(string username)

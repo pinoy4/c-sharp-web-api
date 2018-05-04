@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
-namespace MWTest
+namespace MWTest.ConfigurationOptions
 {
     public class JwtIssuerOptions
     {
