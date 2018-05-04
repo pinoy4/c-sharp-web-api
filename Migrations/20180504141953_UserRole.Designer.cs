@@ -12,9 +12,10 @@ using System;
 namespace MWTest.Migrations
 {
     [DbContext(typeof(MWTestDb))]
-    partial class MWTestDbModelSnapshot : ModelSnapshot
+    [Migration("20180504141953_UserRole")]
+    partial class UserRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

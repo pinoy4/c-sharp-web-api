@@ -2,14 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using MWTest.Managers;
 using MWTest.Model;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MWTest.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     public class UsersController : Controller
     {
         private readonly IUserManager _userManager;
@@ -21,6 +19,7 @@ namespace MWTest.Controllers
 
         // GET api/users
         [HttpGet]
+        [Authorize(Policy = "RoleAdmin")]
         public IEnumerable<User> Get()
         {
             return _userManager.AllUsers();
@@ -28,6 +27,7 @@ namespace MWTest.Controllers
 
         // GET api/users/:id
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<User> Get(int id)
         {
             return await _userManager.UserWithIdAsync(id);
@@ -41,12 +41,14 @@ namespace MWTest.Controllers
 
         // PUT api/users/:id
         [HttpPut("{id}")]
+        [Authorize(Policy = "RoleUser")]
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE api/users/:ud
+        // DELETE api/users/:id
         [HttpDelete("{id}")]
+        [Authorize(Policy = "RoleUser")]
         public void Delete(int id)
         {
         }

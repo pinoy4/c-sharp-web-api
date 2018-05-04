@@ -18,10 +18,11 @@ To run migrations execute `dotnet ef database update` in the terminal from the r
 
 # FEATURES:
 
-- [x] database connection
-- [x] database migrations
-- [x] authentication
-- [ ] authorization
+- [x] database connection *(EntityFramework + Postgresql)*
+- [x] database migrations *(EntityFramework)*
+- [x] authentication *(Jwt)*
+- [x] authorization *(role based from Jwt)*
+- [ ] secure passwords *(BCrypt)*
 - [ ] automatic swagger documentation
 - [ ] testing
 - [ ] input validation and payloads
@@ -73,3 +74,9 @@ This part is heavily *inspired* (pronounced copy-pasted) from [this tutorial](ht
 - Add the `app.UseAuthentication();` line in the `Configure` method of `Startup`
 - Add the `[Authorize]` attribute on the controller or action that needs authorization
 
+#### Role based Authorization
+
+- Add the `Role` property to `User`
+- Add the `"Role"` claim in `JwtFactory`'s `claims` variable
+- Add the authorization options to the `IServiceCollection` in `RegisterServices`
+- Add proper `[Authoriza(	Policy = "PolicyName")]` annotations in the controllers

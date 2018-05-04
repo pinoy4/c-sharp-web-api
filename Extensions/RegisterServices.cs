@@ -7,6 +7,7 @@ using MWTest.Auth;
 using MWTest.ConfigurationOptions;
 using MWTest.Db;
 using MWTest.Managers;
+using MWTest.Model;
 using System;
 using System.Text;
 
@@ -63,7 +64,22 @@ namespace MWTest.Extensions
                 configureOptions.SaveToken = true;
             });
 
-            //services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RoleUser", policy => policy.RequireClaim("Role", new[] {
+                    UserRole.User.ToString(),
+                    UserRole.Admin.ToString(),
+                    UserRole.Developer.ToString()
+                }));
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RoleAdmin", policy => policy.RequireClaim("Role", new[] {
+                    UserRole.Admin.ToString(),
+                    UserRole.Developer.ToString()
+                }));
+            });
         }
 
         public static void AddMWTestServices(this IServiceCollection services)
