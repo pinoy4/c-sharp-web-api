@@ -15,7 +15,8 @@ namespace MWTest.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Userame = table.Column<string>(maxLength: 32, nullable: false)
+                    Password = table.Column<string>(maxLength: 32, nullable: false),
+                    Username = table.Column<string>(maxLength: 32, nullable: false)
                 },
                 constraints: table =>
                 {

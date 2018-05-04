@@ -11,7 +11,7 @@ using System;
 namespace MWTest.Migrations
 {
     [DbContext(typeof(MWTestDb))]
-    [Migration("20180502101123_InitialCreate")]
+    [Migration("20180504092621_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,11 @@ namespace MWTest.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Userame")
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(32);
+
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(32);
 

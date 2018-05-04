@@ -25,7 +25,11 @@ namespace MWTest.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Userame")
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(32);
+
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(32);
 

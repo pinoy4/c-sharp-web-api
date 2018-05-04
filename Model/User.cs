@@ -10,6 +10,10 @@ namespace MWTest.Model
 
         [Required]
         [MaxLength(32)]
-        public string Userame { get; set; }
+        public string Username { get; set; }
+
+        [Required]
+        [MaxLength(32)]
+        public string Password { get; set; }
     }
 }
