@@ -12,9 +12,10 @@ using System;
 namespace MWTest.Migrations
 {
     [DbContext(typeof(MWTestDb))]
-    partial class MWTestDbModelSnapshot : ModelSnapshot
+    [Migration("20180507075838_Lowercase")]
+    partial class Lowercase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
