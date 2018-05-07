@@ -1,9 +1,9 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using MWTest.ConfigurationOptions;
+using MWTest.Extensions;
 using MWTest.Model;
 
 namespace MWTest.Auth
@@ -23,7 +23,7 @@ namespace MWTest.Auth
                 {
                     new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString(), ClaimValueTypes.Integer64),
                     new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
-                    new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
+                    new Claim(JwtRegisteredClaimNames.Iat, _jwtOptions.IssuedAt.ToUnixEpoch().ToString(), ClaimValueTypes.Integer64),
                     new Claim("Role", user.Role.ToString(), ClaimValueTypes.Integer32)
                 };
 
@@ -40,11 +40,5 @@ namespace MWTest.Auth
 
             return encodedJwt;
         }
-
-        /// <returns>Date converted to seconds since Unix epoch (Jan 1, 1970, midnight UTC).</returns>
-        private static long ToUnixEpochDate(DateTime date)
-          => (long)Math.Round((date.ToUniversalTime() -
-                               new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero))
-                              .TotalSeconds);
     }
 }

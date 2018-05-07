@@ -30,6 +30,8 @@ namespace MWTest.Controllers
         [Authorize]
         public async Task<User> Get(int id)
         {
+            // TODO: check if authenticated user is the same as the given id
+            // or the user has admin (or superior) role
             return await _userManager.UserWithIdAsync(id);
         }
 
@@ -37,6 +39,7 @@ namespace MWTest.Controllers
         [HttpPost]
         public void Post([FromBody]string value)
         {
+            // TODO: add user
         }
 
         // PUT api/users/:id
@@ -44,6 +47,10 @@ namespace MWTest.Controllers
         [Authorize(Policy = "RoleUser")]
         public void Put(int id, [FromBody]string value)
         {
+            // TODO: check if authenticated user is the same as the given id
+            // or the user has admin (or superior) role
+
+            // TODO: update user
         }
 
         // DELETE api/users/:id
@@ -51,6 +58,10 @@ namespace MWTest.Controllers
         [Authorize(Policy = "RoleUser")]
         public void Delete(int id)
         {
+            // TODO: check if authenticated user is the same as the given id
+            // or the user has admin (or superior) role
+
+            // TODO: remove user
         }
     }
 }
