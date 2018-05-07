@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MWTest.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("users")]
     public class UsersController : Controller
     {
         private readonly IUserManager _userManager;
@@ -17,7 +17,7 @@ namespace MWTest.Controllers
             _userManager = userManager;
         }
 
-        // GET api/users
+        // GET users
         [HttpGet]
         [Authorize(Policy = "RoleAdmin")]
         public IEnumerable<User> Get()
@@ -25,7 +25,7 @@ namespace MWTest.Controllers
             return _userManager.AllUsers();
         }
 
-        // GET api/users/:id
+        // GET users/:id
         [HttpGet("{id}")]
         [Authorize]
         public async Task<User> Get(int id)
@@ -35,14 +35,14 @@ namespace MWTest.Controllers
             return await _userManager.UserWithIdAsync(id);
         }
 
-        // POST api/users
+        // POST users
         [HttpPost]
         public void Post([FromBody]string value)
         {
             // TODO: add user
         }
 
-        // PUT api/users/:id
+        // PUT users/:id
         [HttpPut("{id}")]
         [Authorize(Policy = "RoleUser")]
         public void Put(int id, [FromBody]string value)
@@ -53,7 +53,7 @@ namespace MWTest.Controllers
             // TODO: update user
         }
 
-        // DELETE api/users/:id
+        // DELETE users/:id
         [HttpDelete("{id}")]
         [Authorize(Policy = "RoleUser")]
         public void Delete(int id)

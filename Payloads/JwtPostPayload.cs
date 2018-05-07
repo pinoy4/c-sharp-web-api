@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MWTest.Payloads
+﻿namespace MWTest.Payloads
 {
     public class JwtPostPayload
     {

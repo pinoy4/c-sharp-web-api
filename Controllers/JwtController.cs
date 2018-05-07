@@ -1,15 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MWTest.Auth;
 using MWTest.Managers;
-using MWTest.Model;
 using MWTest.Payloads;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Threading.Tasks;
 
 namespace MWTest.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("jwt")]
     public class JwtController : Controller
     {
         private readonly IUserManager _userManager;
@@ -27,7 +25,7 @@ namespace MWTest.Controllers
             _jwtFactory = jwtFactory;
         }
 
-        // POST api/jwt
+        // POST jwt
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]JObject value)
         {
