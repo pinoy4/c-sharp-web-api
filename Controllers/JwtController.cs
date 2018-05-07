@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MWTest.Auth;
+using MWTest.Filters;
 using MWTest.Managers;
 using MWTest.Payloads;
-using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 
 namespace MWTest.Controllers
@@ -27,15 +27,9 @@ namespace MWTest.Controllers
 
         // POST jwt
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]JObject value)
+        [ValidateModel]
+        public async Task<IActionResult> Post([FromBody]JwtPostPayload payload)
         {
-            // Get parameters and validate
-            var payload = value.ToObject<JwtPostPayload>();
-            if (payload.Username == null || payload.Password == null)
-            {
-                return BadRequest(); // missing params
-            }
-
             // Get user from db
             var user = _userManager.UserWithUsername(payload.Username);
             if (user == null)
@@ -56,7 +50,7 @@ namespace MWTest.Controllers
             Request.HttpContext.Response.Headers.Add("jwt", jwt);
 
             // Return correct result
-            return NoContent(); // new OkObjectResult(jwt);
+            return NoContent();
         }
     }
 }

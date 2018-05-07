@@ -1,6 +1,5 @@
 ﻿using MWTest.Db;
 using MWTest.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,9 +25,20 @@ namespace MWTest.Managers
             return _db.Users.ToArray();
         }
 
+        public User UserWithEmail(string email)
+        {
+            return _db.Users.Where(u => u.Email == email).FirstOrDefault();
+        }
+
         public User UserWithUsername(string username)
         {
             return _db.Users.Where(u => u.Username == username).FirstOrDefault();
+        }
+
+        public async Task AddUserAsync(User user)
+        {
+            await _db.Users.AddAsync(user);
+            await _db.SaveChangesAsync();
         }
     }
 }

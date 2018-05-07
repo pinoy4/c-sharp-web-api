@@ -1,18 +1,20 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MWTest.Filters;
 using MWTest.Managers;
 using MWTest.Model;
+using MWTest.Payloads;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MWTest.Controllers
 {
     [Route("users")]
-    public class UsersController : Controller
+    public class UserController : Controller
     {
         private readonly IUserManager _userManager;
 
-        public UsersController(IUserManager userManager)
+        public UserController(IUserManager userManager)
         {
             _userManager = userManager;
         }
@@ -26,7 +28,7 @@ namespace MWTest.Controllers
         }
 
         // GET users/:id
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         [Authorize]
         public async Task<User> Get(int id)
         {
@@ -37,13 +39,36 @@ namespace MWTest.Controllers
 
         // POST users
         [HttpPost]
-        public void Post([FromBody]string value)
+        [ValidateModel]
+        public async Task<IActionResult> Post([FromBody]UserPostPayload payload)
         {
-            // TODO: add user
+            if (_userManager.UserWithEmail(payload.Email) != null)
+            {
+                ModelState.AddModelError("Email", "The given email is not available");
+                return new BadRequestObjectResult(ModelState);
+            }
+
+            if (_userManager.UserWithUsername(payload.Username) != null)
+            {
+                ModelState.AddModelError("Username", "The given username is not available");
+                return new BadRequestObjectResult(ModelState);
+            }
+
+            var user = new User()
+            {
+                Email = payload.Email,
+                Password = payload.Password,
+                Username = payload.Username,
+                Role = payload.Role
+            };
+
+            await _userManager.AddUserAsync(user);
+
+            return NoContent();
         }
 
         // PUT users/:id
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         [Authorize(Policy = "RoleUser")]
         public void Put(int id, [FromBody]string value)
         {
@@ -54,7 +79,7 @@ namespace MWTest.Controllers
         }
 
         // DELETE users/:id
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         [Authorize(Policy = "RoleUser")]
         public void Delete(int id)
         {

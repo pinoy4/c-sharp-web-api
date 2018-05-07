@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using MWTest.Auth;
 using MWTest.ConfigurationOptions;
 using MWTest.Db;
+using MWTest.Filters;
 using MWTest.Managers;
 using MWTest.Model;
 using System;
@@ -87,6 +88,8 @@ namespace MWTest.Extensions
             services.AddScoped<IJwtFactory, JwtFactory>();
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             services.AddScoped<IUserManager, UserManager>();
+
+            services.AddScoped<ValidateModelAttribute>();
         }
     }
 }
