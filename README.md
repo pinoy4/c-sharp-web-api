@@ -16,14 +16,8 @@ To start the database run `docker-compose up` in the terminal from the root fold
 #### Migrations
 To run migrations execute `dotnet ef database update` in the terminal from the root folder of the project.
 
-#### Package dependencies
-To enable swagger documentation install the following Nuget package from your package manager console:
-
-```sh
-Install-Package Swashbuckle.AspNetCore
-```
-
-Navigate your browser to https://localhost:{yourport}/swagger  to view your new API documentation.
+#### Swagger documentation
+The documentation for the api is served at `https://localhost:5000/swagger`
 
 # FEATURES:
 
@@ -103,3 +97,8 @@ If further validation is needed you can add attributes to the object's propertie
 - Add the `ValidateModelAttribute` class
 - Register it in the `AddMWTestServices` method of `RegisterServises`
 - Add the `[ValidateModel]` attribute to the action (like in `UserController`'s `Post` method)
+
+#### Automatic swagger docs
+- Add dependency for `Swashbuckle.AspNetCore`
+- Call the `AddSwaggerGen` method in `Startup`'s `ConfigureServices` method
+- Add the `UseSwagger` and `UseSwaggerUI` methods to `Startup`'s `Configure` method

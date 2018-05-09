@@ -34,11 +34,11 @@ namespace MWTest
 
             // Add MVC
             services.AddMvc();
-            
+
             // Add SWAGGER
             services.AddSwaggerGen(swagger =>
             {
-                swagger.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "My First Swagger" });
+                swagger.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "C# Web Api" });
             });
         }
 
@@ -57,7 +57,7 @@ namespace MWTest
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MVTest documentation");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MWTest documentation");
             });
 
             app.UseMvc();
