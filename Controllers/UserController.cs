@@ -38,7 +38,26 @@ namespace MWTest.Controllers
         }
 
         // POST users
+        /// <summary>
+        /// Insert a new user
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /user
+        ///     {
+        ///        "Email": "demo@domain.com",
+        ///        "Password": "secretpassword",
+        ///        "Username": "demoName",
+        ///        "Role": "admin"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">No content</response>
+        /// <response code="400">Email or username is not available</response>
         [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         [ValidateModel]
         public async Task<IActionResult> Post([FromBody]UserPostPayload payload)
         {

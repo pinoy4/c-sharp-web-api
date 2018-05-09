@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using MWTest.ConfigurationOptions;
 using MWTest.Extensions;
 using MWTest.Middleware;
+using System;
+using System.IO;
 
 namespace MWTest
 {
@@ -34,11 +36,16 @@ namespace MWTest
 
             // Add MVC
             services.AddMvc();
-            
-            // Add SWAGGER
+
+            // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(swagger =>
             {
                 swagger.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "My First Swagger" });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var basePath = AppContext.BaseDirectory;
+                var xmlPath = Path.Combine(basePath, "MWTest.xml");
+                swagger.IncludeXmlComments(xmlPath);
             });
         }
 
@@ -54,7 +61,10 @@ namespace MWTest
 
             app.UseMiddleware<DateTimeHeaderMiddleware>();
 
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "MVTest documentation");
