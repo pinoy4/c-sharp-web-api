@@ -31,13 +31,12 @@ Navigate your browser to https://localhost:{yourport}/swagger  to view your new 
 - [x] database migrations *(EntityFramework)*
 - [x] authentication *(Jwt)*
 - [x] authorization *(role based from Jwt)*
-- [ ] automatic swagger documentation
+- [x] automatic swagger documentation
 - [ ] testing
 - [x] input validation and payloads
 - [ ] cors
 - [ ] https
 - [ ] error responses
-- [x] swagger documentation auto generated based on source code
 
 # HOW TO
 Here is a list of things that have been included in the project. This is not meant as a tutorial but as a quick reference for understanding what has gone into creating the project. Hopefully this will be useful when trying to replicate these features.
