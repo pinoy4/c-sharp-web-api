@@ -34,6 +34,12 @@ namespace MWTest
 
             // Add MVC
             services.AddMvc();
+            
+            // Add SWAGGER
+            services.AddSwaggerGen(swagger =>
+            {
+                swagger.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "My First Swagger" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +53,12 @@ namespace MWTest
             app.UseAuthentication();
 
             app.UseMiddleware<DateTimeHeaderMiddleware>();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MVTest documentation");
+            });
 
             app.UseMvc();
         }

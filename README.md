@@ -16,6 +16,13 @@ To start the database run `docker-compose up` in the terminal from the root fold
 #### Migrations
 To run migrations execute `dotnet ef database update` in the terminal from the root folder of the project.
 
+#### Package dependencies
+To enable swagger documentation install the following Nuget package from your package manager console:
+
+Install-Package Swashbuckle.AspNetCore
+
+Navigate your browser to https://localhost:{yourport}/swagger  to view your new API documentation.
+
 # FEATURES:
 
 - [x] database connection *(EntityFramework + Postgresql)*
@@ -28,6 +35,7 @@ To run migrations execute `dotnet ef database update` in the terminal from the r
 - [ ] cors
 - [ ] https
 - [ ] error responses
+- [x] swagger documentation auto generated based on source code
 
 # HOW TO
 Here is a list of things that have been included in the project. This is not meant as a tutorial but as a quick reference for understanding what has gone into creating the project. Hopefully this will be useful when trying to replicate these features.
