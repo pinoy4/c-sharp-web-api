@@ -19,7 +19,9 @@ To run migrations execute `dotnet ef database update` in the terminal from the r
 #### Package dependencies
 To enable swagger documentation install the following Nuget package from your package manager console:
 
+```sh
 Install-Package Swashbuckle.AspNetCore
+```
 
 Navigate your browser to https://localhost:{yourport}/swagger  to view your new API documentation.
 
